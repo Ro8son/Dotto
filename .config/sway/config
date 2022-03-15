@@ -1,0 +1,301 @@
+# Deps: wob, mako, dbus
+
+# Variables
+
+	# Logo key. Use Mod1 for Alt.
+	set $mod Mod4
+
+	# Home row direction keys, like vim
+	set $left h
+	set $down j
+	set $up k
+	set $right l
+
+	# Your preferred terminal emulator
+	set $term footclient	
+	# Your preferred application launcher
+	set $menu ~/.local/bin/bemenu_run_i.sh
+
+# Output configuration
+
+output HDMI-A-2 pos 0 	 0 res 1920x1080
+output HDMI-A-1 pos 1920 0 res 1920x1080
+
+focus output HDMI-A-2
+
+output * bg ~/.config/wallpaper.png fill
+output * scale 1 
+#output HDMI-A-1 resolution 4096x2160 position 4096,0
+
+# Input configuration:
+
+input "*" {
+	xkb_layout pl
+	xkb_options caps:escape
+}
+
+# Key bindings
+
+## Basics:
+
+	# Start a terminal
+	bindsym $mod+Return exec $term
+
+	# Kill focused window
+	bindsym $mod+q kill
+	
+## Advanced
+
+	# Misc options menu
+	bindsym control+Mod1+d exec ~/.local/bin/omenu.sh 
+
+	# Alt-tab
+	bindsym Mod1+Tab exec ~/.local/bin/sway_alttab.sh 
+
+	# Run clipboard plumbing script 
+	bindsym $mod+c exec ~/.local/bin/plumber-wayland.sh
+
+	# Show weather report
+	#bindsym $mod+Shift+w exec ~/.local/bin/wttr.sh
+
+	# Stop Mpv process/processes
+	bindsym $mod+F8 exec 'pgrep mpv | xargs kill -SIGSTOP'
+
+	# Start your launcher
+	bindsym $mod+d exec $menu
+
+	# Jump to urgent workspace
+	#bindsym $mod+x mark last;[urgent=latest] focus
+	# Go back
+	bindsym $mod+z [con_mark="last"] focus
+
+	# Drag floating windows by holding down $mod and left mouse button.
+	# Resize them with right mouse button + $mod.
+	# Despite the name, also works for non-floating windows.
+	# Change normal to inverse to use left mouse button for resizing and right
+	# mouse button for dragging.
+	floating_modifier $mod normal
+
+	# Reload the configuration file
+	bindsym $mod+Shift+c reload
+
+# Moving around:
+	# Move your focus around
+	bindsym $mod+$left focus left
+	bindsym $mod+$down focus down
+	bindsym $mod+$up focus up
+	bindsym $mod+$right focus right
+	# Or use $mod+[up|down|left|right]
+	bindsym $mod+Left focus left
+	bindsym $mod+Down focus down
+	bindsym $mod+Up focus up
+	bindsym $mod+Right focus right
+
+	# Move the focused window with the same, but add Shift
+	bindsym $mod+Shift+$left move left
+	bindsym $mod+Shift+$down move down
+	bindsym $mod+Shift+$up move up
+	bindsym $mod+Shift+$right move right
+	# Ditto, with arrow keys
+	bindsym $mod+Shift+Left move left
+	bindsym $mod+Shift+Down move down
+	bindsym $mod+Shift+Up move up
+	bindsym $mod+Shift+Right move right
+
+# Workspaces:
+	# Switch to workspace
+	bindsym $mod+1 workspace 1
+	bindsym $mod+2 workspace 2
+	bindsym $mod+3 workspace 3
+	bindsym $mod+4 workspace 4
+	bindsym $mod+5 workspace 5
+	bindsym $mod+6 workspace 6
+	bindsym $mod+7 workspace 7
+	bindsym $mod+8 workspace 8
+	bindsym $mod+9 workspace 9
+	bindsym $mod+0 workspace 10
+	# Move focused container to workspace
+	bindsym $mod+Shift+1 move container to workspace 1
+	bindsym $mod+Shift+2 move container to workspace 2
+	bindsym $mod+Shift+3 move container to workspace 3
+	bindsym $mod+Shift+4 move container to workspace 4
+	bindsym $mod+Shift+5 move container to workspace 5
+	bindsym $mod+Shift+6 move container to workspace 6
+	bindsym $mod+Shift+7 move container to workspace 7
+	bindsym $mod+Shift+8 move container to workspace 8 
+	bindsym $mod+Shift+9 move container to workspace 9
+	bindsym $mod+Shift+0 move container to workspace 10
+
+	# The same thing for the numpad numbers
+	bindsym $mod+KP_1 workspace 1
+	bindsym $mod+KP_2 workspace 2
+	bindsym $mod+KP_3 workspace 3
+	bindsym $mod+KP_4 workspace 4
+	bindsym $mod+KP_5 workspace 5
+	bindsym $mod+KP_6 workspace 6
+	bindsym $mod+KP_7 workspace 7
+	bindsym $mod+KP_8 workspace 8
+	bindsym $mod+KP_9 workspace 9
+	bindsym $mod+KP_0 workspace 10
+	# Move focused container to workspace
+	bindsym $mod+Shift+KP_1 move container to workspace 1
+	bindsym $mod+Shift+KP_2 move container to workspace 2
+	bindsym $mod+Shift+KP_3 move container to workspace 3
+	bindsym $mod+Shift+KP_4 move container to workspace 4
+	bindsym $mod+Shift+KP_5 move container to workspace 5
+	bindsym $mod+Shift+KP_6 move container to workspace 6
+	bindsym $mod+Shift+KP_7 move container to workspace 7
+	bindsym $mod+Shift+KP_8 move container to workspace 8
+	bindsym $mod+Shift+KP_9 move container to workspace 9
+	bindsym $mod+Shift+KP_0 move container to workspace 10
+
+	# Enable Alt+Tab Functionality
+	bindsym $mod+Tab workspace next
+	bindsym $mod+Shift+Tab workspace prev
+
+	# Jump to last used workspace
+	bindsym $mod+grave workspace back_and_forth
+
+# Layout stuff:
+	bindsym $mod+b splith
+	bindsym $mod+v splitv
+
+	# Switch the current container between different layout styles
+	bindsym $mod+w layout tabbed
+	bindsym $mod+r layout stacking
+	bindsym $mod+e layout toggle split
+
+	# Make the current focus fullscreen
+	bindsym $mod+f fullscreen
+
+	# Toggle the current focus between tiling and floating mode
+	bindsym $mod+Shift+space floating toggle
+
+	# Swap focus between the tiling area and the floating area
+	bindsym $mod+space focus mode_toggle
+
+	# Move focus to the parent container
+	bindsym $mod+a focus parent
+	bindsym $mod+shift+a focus child
+	
+	bindsym $mod+s sticky toggle
+
+# Swap with master conatiner
+	bindsym $mod+m swap container with mark master; mark master
+	bindsym $mod+Shift+m mark master
+# Scratchpad:
+
+	# Move the currently focused window to the scratchpad
+	bindsym $mod+Shift+minus move scratchpad
+
+	# Show the next scratchpad window or hide the focused scratchpad window.
+	# If there are multiple scratchpad windows, this command cycles through them.
+	bindsym $mod+minus scratchpad show
+
+# Resizing containers:
+	bindsym control+$mod+$left resize grow width 50px
+	bindsym control+$mod+$down resize shrink height 50px
+	bindsym control+$mod+$up resize grow height 50px
+	bindsym control+$mod+$right resize shrink width 50px
+
+	# Ditto, with arrow keys
+	bindsym control+$mod+Left resize grow width 50px
+	bindsym control+$mod+Down resize shrink height 50px
+	bindsym control+$mod+Up resize grow height 50px
+	bindsym control+$mod+Right resize shrink width 50px
+
+
+# Status Bar:
+bar {
+	position top
+
+   # When the status_command prints a new line to stdout, swaybar updates.
+   # The default just shows the current date and time.
+   status_command  ~/.local/bin/baraction.sh
+
+	colors {
+		statusline #ffffff
+		background #000000
+		focused_workspace	#d8dee9 #1a202c #ffffff
+		active_workspace 	#000000 #5f676a #ffffff
+		inactive_workspace	#000000 #1a202c #ffffff
+		urgent_workspace	#000000 #ff0000 #888888
+    }
+}
+
+# Screen shot
+	bindsym Print exec sh -c 'cd ~/pictures/screenshots; grim'
+	bindsym $mod+Print exec sh -c 'cd ~/pictures/screenshots; grim -g "$(slurp)"'
+	bindsym Shift+Print exec sh -c 'grim - | wl-copy -t image/png'
+	bindsym $mod+Shift+Print exec sh -c 'grim -g "$(slurp)" - | wl-copy -t image/png'
+
+# Misc.
+	# Enable XWayland
+	xwayland enable
+
+	workspace_auto_back_and_forth yes
+
+	# Mouse wrapping
+	mouse_warping none
+	focus_wrapping no
+	focus_follows_mouse no
+	
+	# Title formating
+	title_align center
+	
+	# Border width
+	default_border pixel 2
+	default_floating_border pixel 2
+	
+	# class                 border  backgr. text    indicator child_border
+	# client.focused          #d8dee9 #d8dee9 #000000 #d8dee9 #d8dee9
+	# client.unfocused        #1a202c #1a202c #8f95a1 #1a202c #1a202c
+	# client.focused_inactive #1a202c #5e6470 #d8dee9 #1a202c #1a202c
+	# client.urgent           #2f343a #900000 #ffffff #900000 #900000
+	# Solarized
+	client.focused          #2aa198 #2aa198 #000000 #2aa198 #2aa198
+	client.unfocused        #002b36 #002b36 #8f95a1 #1a202c #1a202c
+	client.focused_inactive #2aa198 #002b36 #d8dee9 #1a202c #1a202c
+	
+	
+	# Set font
+	font pango:terminus 10
+	
+	# Hide the cursor
+	# seat * hide_cursor 2000
+	
+	# Run some programs
+	exec dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus
+        exec dbus-run-session pipewire
+	exec mako
+        exec foot --server
+
+	# Transparent and floaty stuff
+	for_window [title="Wayst"] opacity 0.9 
+	for_window [title="Steam"] opacity 1
+	for_window [title="Steam Login"] floating enable 
+	for_window [title="Properties"] floating enable
+	for_window [title="Properties"] opacity 0.95
+	for_window [title="Friends List"] floating enable
+	for_window [title="Discord Updater"] floating enable
+	for_window [title="Settings"] floating enable
+	for_window [title="Product Activation"] floating enable
+	for_window [title="Steam - News"] floating enable
+	for_window [title="- Steam"] floating enable
+	for_window [title="Install -"] floating enable
+	for_window [title="Install -"] opacity 0.95
+	for_window [title="Steam -"] opacity 0.95
+	for_window [title="qTox -"] floating enable	
+
+# Smart gaps and borders
+	smart_borders no
+	smart_gaps no
+	gaps inner 15
+
+	show_marks yes
+
+#exec glpaper -f 30 HDMI-A-2 ~/.config/shader.frag 
+
+mode "pass" {
+	bindsym mod4+Space mode "default"
+}
