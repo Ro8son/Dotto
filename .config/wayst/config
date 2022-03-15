@@ -1,0 +1,29 @@
+font-symbol = [
+    "Noto Sans Symbols",
+	"FontAwesome"
+	]
+
+
+style-bold = "Semibold"
+font-size = 10
+dpi = 96
+
+colorscheme = "solarized"
+#fg-color = "#c7eeff"
+#bg-color = "#000000aa"
+#unfocused-tint = "#00000033"
+
+no-flash = true
+
+term = "xterm-256color"
+
+#title = "Terminal"
+#title-format = "%s [%s]"    # Terminal [<set by program>]
+
+scrollback = 8000
+
+bind-key-debug=Alt+Shift+Return
+bind-key-enlarge=Alt+Shift+equal
+bind-key-shrink=Alt+Shift+minus
+bind-key-copy=Alt+Shift+c
+bind-key-paste=Alt+Shift+v

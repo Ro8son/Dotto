@@ -1,0 +1,44 @@
+#
+# ~/.mkshrc
+#
+
+# PS1=" \$PWD $(if (( USER_ID )); then print \$; else print \#; fi) "
+
+PS1="$(if (( USER_ID)); then print '\033[36m >> \033[00m'; else print '\033[31m >> \033[00m'; fi) $(print '\033[36m$(echo $PWD) \033[00m')" 
+HISTFILE=$HOME/.config/.hist
+HISTSIZE=10000
+
+set -o emacs
+
+. ~/.config/user-dirs.dirs
+
+bind ^[a=beginning-of-line
+bind ^[e=end-of-line
+bind ^L=clear-screen
+
+export XDG_CONFIG_HOME=/home/robson/.config/
+export TERM=st-256color
+export PATH=$PATH:$HOME/.local/bin
+export STEAM_COMPAT_DATA_PATH=$HOME/proton
+
+alias ls='ls --color -h --group-directories-first'
+alias ll='ls --color -h --group-directories-first -la'
+alias minidlna-start="minidlna -f ~/.config/minidlna/minidlna.conf -P ~/.config/minidlna/minidlna.pid -d"
+alias obs="QT_QPA_PLATFORM=xcb obs"
+
+if test -z "${XDG_RUNTIME_DIR}"; then
+  export XDG_RUNTIME_DIR=/tmp/$(id -u)-runtime-dir
+  if ! test -d "${XDG_RUNTIME_DIR}"; then
+    mkdir "${XDG_RUNTIME_DIR}"
+    chmod 0700 "${XDG_RUNTIME_DIR}"
+  fi
+fi
+
+if [ "$(tty)" = "/dev/tty1" ]; then
+	exec sway
+fi
+
+#Automatically removes Desktope folder
+[ -e Desktop ] && rm -rf Desktop
+
+umask 077
