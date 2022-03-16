@@ -1,4 +1,4 @@
-# Deps: wob, mako, dbus
+# Deps:mako, dbus, seatd, pipewire, wl-clipboard
 
 # Variables
 
@@ -18,10 +18,10 @@
 
 # Output configuration
 
-output HDMI-A-2 pos 0 	 0 res 1920x1080
-output HDMI-A-1 pos 1920 0 res 1920x1080
+#output HDMI-A-2 pos 0 	 0 res 1920x1080
+output HDMI-A-1 mode 1920x1080
 
-focus output HDMI-A-2
+#focus output HDMI-A-2
 
 output * bg ~/.config/wallpaper.png fill
 output * scale 1 
@@ -43,7 +43,7 @@ input "*" {
 
 	# Kill focused window
 	bindsym $mod+q kill
-	
+
 ## Advanced
 
 	# Misc options menu
@@ -177,7 +177,7 @@ input "*" {
 	# Move focus to the parent container
 	bindsym $mod+a focus parent
 	bindsym $mod+shift+a focus child
-	
+
 	bindsym $mod+s sticky toggle
 
 # Swap with master conatiner
@@ -239,14 +239,14 @@ bar {
 	mouse_warping none
 	focus_wrapping no
 	focus_follows_mouse no
-	
+
 	# Title formating
 	title_align center
-	
+
 	# Border width
 	default_border pixel 2
 	default_floating_border pixel 2
-	
+
 	# class                 border  backgr. text    indicator child_border
 	# client.focused          #d8dee9 #d8dee9 #000000 #d8dee9 #d8dee9
 	# client.unfocused        #1a202c #1a202c #8f95a1 #1a202c #1a202c
@@ -256,14 +256,14 @@ bar {
 	client.focused          #2aa198 #2aa198 #000000 #2aa198 #2aa198
 	client.unfocused        #002b36 #002b36 #8f95a1 #1a202c #1a202c
 	client.focused_inactive #2aa198 #002b36 #d8dee9 #1a202c #1a202c
-	
-	
+
+
 	# Set font
 	font pango:terminus 10
-	
+
 	# Hide the cursor
 	# seat * hide_cursor 2000
-	
+
 	# Run some programs
 	exec dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus
         exec dbus-run-session pipewire
