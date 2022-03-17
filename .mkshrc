@@ -25,6 +25,7 @@ alias ls='ls --color -h --group-directories-first'
 alias ll='ls --color -h --group-directories-first -la'
 alias minidlna-start="minidlna -f ~/.config/minidlna/minidlna.conf -P ~/.config/minidlna/minidlna.pid -d"
 alias obs="QT_QPA_PLATFORM=xcb obs"
+alias mpc="mpv --loop-playlist --shuffle"
 
 if test -z "${XDG_RUNTIME_DIR}"; then
   export XDG_RUNTIME_DIR=/tmp/$(id -u)-runtime-dir
@@ -38,7 +39,7 @@ if [ "$(tty)" = "/dev/tty1" ]; then
 	exec sway
 fi
 
-#Automatically removes Desktope folder
-[ -e Desktop ] && rm -rf Desktop
+#Desktop? What's desktop?
+rm -rf ~/Desktop
 
 umask 077
