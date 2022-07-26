@@ -19,12 +19,8 @@
 # Output configuration
 
 #output HDMI-A-2 pos 0 	 0 res 1920x1080
-<<<<<<< HEAD
-output HDMI-A-1 mode 1920x1080
-=======
 output DP-1 mode 1920x1080@75hz
 output DP-2 mode 1920x1080@75hz
->>>>>>> 5cd739e (Switched to a nord theme)
 
 #focus output HDMI-A-2
 
