@@ -11,6 +11,7 @@ HISTSIZE=10000
 set -o emacs
 
 . ~/.config/user-dirs.dirs
+# . /home/robson/.nix-profile/etc/profile.d/nix.sh
 
 bind ^[a=beginning-of-line
 bind ^[e=end-of-line
@@ -22,7 +23,6 @@ export PATH=$PATH:$HOME/.local/bin
 export STEAM_COMPAT_DATA_PATH=$HOME/proton
 
 alias ls='ls --color -h --group-directories-first'
-alias ll='ls --color -h --group-directories-first -la'
 alias minidlna-start="minidlna -f ~/.config/minidlna/minidlna.conf -P ~/.config/minidlna/minidlna.pid -d"
 alias obs="QT_QPA_PLATFORM=xcb obs"
 alias mpc="mpv --loop-playlist --shuffle"

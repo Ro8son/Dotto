@@ -19,7 +19,12 @@
 # Output configuration
 
 #output HDMI-A-2 pos 0 	 0 res 1920x1080
+<<<<<<< HEAD
 output HDMI-A-1 mode 1920x1080
+=======
+output DP-1 mode 1920x1080@75hz
+output DP-2 mode 1920x1080@75hz
+>>>>>>> 5cd739e (Switched to a nord theme)
 
 #focus output HDMI-A-2
 
@@ -187,10 +192,22 @@ input "*" {
 
 	# Move the currently focused window to the scratchpad
 	bindsym $mod+Shift+minus move scratchpad
+<<<<<<< HEAD
 
 	# Show the next scratchpad window or hide the focused scratchpad window.
 	# If there are multiple scratchpad windows, this command cycles through them.
 	bindsym $mod+minus scratchpad show
+=======
+	
+	
+	#mode "Cycle scratchpad" {     
+		bindsym $mod+minus scratchpad show
+		bindsym $mod+equal scratchpad show; scratchpad show
+	#}
+
+	# Show the next scratchpad window or hide the focused scratchpad window.
+	# If there are multiple scratchpad windows, this command cycles through them.
+>>>>>>> 5cd739e (Switched to a nord theme)
 
 # Resizing containers:
 	bindsym control+$mod+$left resize grow width 50px
@@ -214,12 +231,12 @@ bar {
    status_command  ~/.local/bin/baraction.sh
 
 	colors {
-		statusline #ffffff
-		background #000000
-		focused_workspace	#d8dee9 #1a202c #ffffff
+        background #2e3440
+        statusline #88c0d0
 		active_workspace 	#000000 #5f676a #ffffff
-		inactive_workspace	#000000 #1a202c #ffffff
 		urgent_workspace	#000000 #ff0000 #888888
+        inactive_workspace   #3b4252 #3b4252 #8fbcbb
+	    focused_workspace  #81a1c1 #81a1c1 #eceff4
     }
 }
 
@@ -253,11 +270,13 @@ bar {
 	# client.focused_inactive #1a202c #5e6470 #d8dee9 #1a202c #1a202c
 	# client.urgent           #2f343a #900000 #ffffff #900000 #900000
 	# Solarized
-	client.focused          #2aa198 #2aa198 #000000 #2aa198 #2aa198
-	client.unfocused        #002b36 #002b36 #8f95a1 #1a202c #1a202c
-	client.focused_inactive #2aa198 #002b36 #d8dee9 #1a202c #1a202c
-
-
+	#client.focused          #2aa198 #2aa198 #000000 #2aa198 #2aa198
+	#client.unfocused        #002b36 #002b36 #8f95a1 #1a202c #1a202c
+	#client.focused_inactive #2aa198 #002b36 #d8dee9 #1a202c #1a202c
+    # Nord
+    client.focused         #81a1c1 #81a1c1 #000000 #3b4252 #81a1c1
+	client.unfocused         #3b4252 #3b4252  #ffffff #81a1c1 #3b4252 
+	client.focused_inactive #3b4252 #3b4252 #ffffff #3b4252 #3b4252
 	# Set font
 	font pango:terminus 10
 
@@ -266,12 +285,13 @@ bar {
 
 	# Run some programs
 	exec dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus
-        exec dbus-run-session pipewire
+    #exec /usr/bin/gentoo-pipewire-launcher
+	exec pipewire
 	exec mako
-        exec foot --server
+    exec foot --server
 
 	# Transparent and floaty stuff
-	for_window [title="Wayst"] opacity 0.9 
+	#for_window [title="Wayst"] opacity 0.9 
 	for_window [title="Steam"] opacity 1
 	for_window [title="Steam Login"] floating enable 
 	for_window [title="Properties"] floating enable
