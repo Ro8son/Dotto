@@ -188,22 +188,12 @@ input "*" {
 
 	# Move the currently focused window to the scratchpad
 	bindsym $mod+Shift+minus move scratchpad
-<<<<<<< HEAD
 
-	# Show the next scratchpad window or hide the focused scratchpad window.
-	# If there are multiple scratchpad windows, this command cycles through them.
 	bindsym $mod+minus scratchpad show
-=======
-	
-	
-	#mode "Cycle scratchpad" {     
-		bindsym $mod+minus scratchpad show
-		bindsym $mod+equal scratchpad show; scratchpad show
-	#}
+	bindsym $mod+equal scratchpad show; scratchpad show
 
 	# Show the next scratchpad window or hide the focused scratchpad window.
 	# If there are multiple scratchpad windows, this command cycles through them.
->>>>>>> 5cd739e (Switched to a nord theme)
 
 # Resizing containers:
 	bindsym control+$mod+$left resize grow width 50px
