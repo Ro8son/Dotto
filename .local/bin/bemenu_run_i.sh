@@ -2,11 +2,11 @@
 # dmenu_run improved
 # if a command ends with "!", it is started in term.
 
-termcmd="wterm -e"
+termcmd="footclient -e"
 shellcmd="mksh -c"
 
 
-cmd="$( (lspath; cat $HOME/.cache/bemenu_run_cache) | bemenu.sh -l 4 -p 'Run:')"
+cmd="$(lspath | bemenu.sh -l 4 -p 'Run:')"
 case $cmd in
     *\! ) ${termcmd} ${shellcmd} "$(printf "%s" "${cmd}" | cut -d'!' -f1)" || read
     ;;

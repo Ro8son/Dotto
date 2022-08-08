@@ -272,7 +272,7 @@ bar {
 	# Run some programs
 	exec dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus
     #exec /usr/bin/gentoo-pipewire-launcher
-	exec pipewire
+	exec /usr/libexec/pipewire-launcher
 	exec mako
     exec foot --server
 
