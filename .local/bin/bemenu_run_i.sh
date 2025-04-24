@@ -6,7 +6,7 @@ termcmd="footclient -e"
 shellcmd="mksh -c"
 
 
-cmd="$(lspath | bemenu.sh -l 4 -p 'Run:')"
+cmd="$(bemenu.sh -l 4 -p 'Run:')"
 case $cmd in
     *\! ) ${termcmd} ${shellcmd} "$(printf "%s" "${cmd}" | cut -d'!' -f1)" || read
     ;;

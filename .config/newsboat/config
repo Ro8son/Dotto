@@ -1,3 +1,5 @@
+include ~/.config/newsboat/dark
+
 auto-reload yes
 
 bind-key j down
@@ -28,9 +30,10 @@ color info green black bold
 color article cyan default
 reload-threads 10
 
+confirm-mark-feed-read no
 
-browser firefox-bin
+
+browser librewolf
 macro , open-in-browser
-macro c set browser "alacritty -e mksh -c 'mpv %u > /dev/null &'" ; open-in-browser ; set browser firefox-bin
-macro v set browser "mpv --ytdl-format='\bestvideo[height<=?1920]+bestaudio/best\' > /dev/null  "; open-in-browser ; set browser firefox-bin
-macro k set browser "aria2c --seed-time=0 -d /home/robson/videos/ %u > /dev/null &";open-in-browser ; set browser firefox-bin
+macro c set browser "foot -e loksh -c 'mpv %u > /dev/null &'" ; open-in-browser ; set browser librewolf
+macro v set browser "mpv --ytdl-format='\bestvideo[height<=?1920]+bestaudio/best\' > /dev/null  "; open-in-browser ; set browser librewolf

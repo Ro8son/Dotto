@@ -1,307 +1,295 @@
-# Deps:mako, dbus, seatd, pipewire, wl-clipboard, foot
+set $mod Mod4
 
-# Variables
+set $left h
+set $down j
+set $up k
+set $right l
 
-	# Logo key. Use Mod1 for Alt.
-	set $mod Mod4
+set $term footclient
+#set $menu bash -c "$(tofi-run)"
+#set $menu kickoff | xargs swaymsg exec -- > /dev/nul
+set $menu tofi-run | xargs swaymsg exec --
+set $drun tofi-drun | xargs swaymsg exec --
 
-	# Home row direction keys, like vim
-	set $left h
-	set $down j
-	set $up k
-	set $right l
-
-	# Your preferred terminal emulator
-	set $term footclient	
-	# Your preferred application launcher
-	set $menu ~/.local/bin/bemenu_run_i.sh
-
-# Output configuration
-
-#output HDMI-A-2 pos 0 	 0 res 1920x1080
-output DP-1 mode 1920x1080@75hz
-output DP-2 mode 1920x1080@75hz
-
-#focus output HDMI-A-2
-
-output * bg ~/.config/wallpaper.png fill
 output * scale 1 
-#output HDMI-A-1 resolution 4096x2160 position 4096,0
+output * bg ~/.config/wallpaper-main.png fill
 
-# Input configuration:
+output eDP-1 {
+	mode 1920x1080@60hz
+  pos 0 2160
+	bg ~/.config/wallpaper-main.png fill
+}
+
+output DP-1 {
+	mode 3840x2160@60hz
+  pos 0 0
+	render_bit_depth 10
+	bg ~/.config/wallpaper-main.png fill
+}
+output DP-2 {
+	mode 1920x1080@75hz
+}
+
+output HDMI-A-1 {
+	mode 4096x2160@30hz
+}
+
+exec swaymsg focus output DP-1
+
+set $laptop eDP-1
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+exec_always ~/.local/bin/shell.sh
 
 input "*" {
 	xkb_layout pl
 	xkb_options caps:escape
+	accel_profile "flat"
+	repeat_delay 400
+	repeat_rate 48
 }
 
-# Key bindings
+input "1267:12596:ASUE140A:00_04F3:3134_Touchpad" {
+	tap enabled
+	natural_scroll enabled
+	dwt enabled
+}
 
-## Basics:
+bindsym $mod+Return exec $term
 
-	# Start a terminal
-	bindsym $mod+Return exec $term
+bindsym $mod+q kill
 
-	# Kill focused window
-	bindsym $mod+q kill
 
-## Advanced
+bindsym $mod+d exec $menu
+bindsym $mod+Shift+d exec $drun
 
-	# Misc options menu
-	bindsym control+Mod1+d exec ~/.local/bin/omenu.sh 
+bindsym $mod+p exec swaync-client -t -sw
+bindsym $mod+o exec swaync-client -R
 
-	# Alt-tab
-	bindsym Mod1+Tab exec ~/.local/bin/sway_alttab.sh 
+bindsym $mod+n exec notify-send tako
 
-	# Run clipboard plumbing script 
-	bindsym $mod+c exec ~/.local/bin/plumber-wayland.sh
+bindsym $mod+Shift+w exec thunar
+bindsym $mod+c exec ~/.local/bin/plumber-wayland.sh
 
-	# Show weather report
-	#bindsym $mod+Shift+w exec ~/.local/bin/wttr.sh
 
-	# Stop Mpv process/processes
-	bindsym $mod+F8 exec 'pgrep mpv | xargs kill -SIGSTOP'
+floating_modifier $mod normal
 
-	# Start your launcher
-	bindsym $mod+d exec $menu
+# Open next window as floating
+set $floatmark none
+bindsym $mod+shift+f set $$floatmark floating
+for_window [title=".*"] mark $$floatmark
+for_window [con_mark=".*floating.*"] floating enable; unmark floating; set $$floatmark none
+for_window [con_mark=".*none.*"] unmark none
 
-	# Jump to urgent workspace
-	#bindsym $mod+x mark last;[urgent=latest] focus
-	# Go back
-	bindsym $mod+z [con_mark="last"] focus
 
-	# Drag floating windows by holding down $mod and left mouse button.
-	# Resize them with right mouse button + $mod.
-	# Despite the name, also works for non-floating windows.
-	# Change normal to inverse to use left mouse button for resizing and right
-	# mouse button for dragging.
-	floating_modifier $mod normal
+bindsym $mod+Shift+c reload
 
-	# Reload the configuration file
-	bindsym $mod+Shift+c reload
+bindgesture swipe:3:right workspace prev_on_output
+bindgesture swipe:3:left workspace next_on_output
 
-# Moving around:
-	# Move your focus around
-	bindsym $mod+$left focus left
-	bindsym $mod+$down focus down
-	bindsym $mod+$up focus up
-	bindsym $mod+$right focus right
-	# Or use $mod+[up|down|left|right]
-	bindsym $mod+Left focus left
-	bindsym $mod+Down focus down
-	bindsym $mod+Up focus up
-	bindsym $mod+Right focus right
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
-	# Move the focused window with the same, but add Shift
-	bindsym $mod+Shift+$left move left
-	bindsym $mod+Shift+$down move down
-	bindsym $mod+Shift+$up move up
-	bindsym $mod+Shift+$right move right
-	# Ditto, with arrow keys
-	bindsym $mod+Shift+Left move left
-	bindsym $mod+Shift+Down move down
-	bindsym $mod+Shift+Up move up
-	bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
 
-# Workspaces:
-	# Switch to workspace
-	bindsym $mod+1 workspace 1
-	bindsym $mod+2 workspace 2
-	bindsym $mod+3 workspace 3
-	bindsym $mod+4 workspace 4
-	bindsym $mod+5 workspace 5
-	bindsym $mod+6 workspace 6
-	bindsym $mod+7 workspace 7
-	bindsym $mod+8 workspace 8
-	bindsym $mod+9 workspace 9
-	bindsym $mod+0 workspace 10
-	# Move focused container to workspace
-	bindsym $mod+Shift+1 move container to workspace 1
-	bindsym $mod+Shift+2 move container to workspace 2
-	bindsym $mod+Shift+3 move container to workspace 3
-	bindsym $mod+Shift+4 move container to workspace 4
-	bindsym $mod+Shift+5 move container to workspace 5
-	bindsym $mod+Shift+6 move container to workspace 6
-	bindsym $mod+Shift+7 move container to workspace 7
-	bindsym $mod+Shift+8 move container to workspace 8 
-	bindsym $mod+Shift+9 move container to workspace 9
-	bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8 
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
 
-	# The same thing for the numpad numbers
-	bindsym $mod+KP_1 workspace 1
-	bindsym $mod+KP_2 workspace 2
-	bindsym $mod+KP_3 workspace 3
-	bindsym $mod+KP_4 workspace 4
-	bindsym $mod+KP_5 workspace 5
-	bindsym $mod+KP_6 workspace 6
-	bindsym $mod+KP_7 workspace 7
-	bindsym $mod+KP_8 workspace 8
-	bindsym $mod+KP_9 workspace 9
-	bindsym $mod+KP_0 workspace 10
-	# Move focused container to workspace
-	bindsym $mod+Shift+KP_1 move container to workspace 1
-	bindsym $mod+Shift+KP_2 move container to workspace 2
-	bindsym $mod+Shift+KP_3 move container to workspace 3
-	bindsym $mod+Shift+KP_4 move container to workspace 4
-	bindsym $mod+Shift+KP_5 move container to workspace 5
-	bindsym $mod+Shift+KP_6 move container to workspace 6
-	bindsym $mod+Shift+KP_7 move container to workspace 7
-	bindsym $mod+Shift+KP_8 move container to workspace 8
-	bindsym $mod+Shift+KP_9 move container to workspace 9
-	bindsym $mod+Shift+KP_0 move container to workspace 10
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
 
-	# Enable Alt+Tab Functionality
-	bindsym $mod+Tab workspace next
-	bindsym $mod+Shift+Tab workspace prev
+bindsym $mod+grave workspace back_and_forth
 
-	# Jump to last used workspace
-	bindsym $mod+grave workspace back_and_forth
+bindsym $mod+b splith
+bindsym $mod+v splitv
 
-# Layout stuff:
-	bindsym $mod+b splith
-	bindsym $mod+v splitv
+bindsym $mod+w layout tabbed
+bindsym $mod+r layout stacking
+bindsym $mod+e layout toggle split
 
-	# Switch the current container between different layout styles
-	bindsym $mod+w layout tabbed
-	bindsym $mod+r layout stacking
-	bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen
 
-	# Make the current focus fullscreen
-	bindsym $mod+f fullscreen
+bindsym $mod+Shift+space floating toggle
 
-	# Toggle the current focus between tiling and floating mode
-	bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
 
-	# Swap focus between the tiling area and the floating area
-	bindsym $mod+space focus mode_toggle
+# Move focus to the parent container
+bindsym $mod+a focus parent
+bindsym $mod+shift+a focus child
 
-	# Move focus to the parent container
-	bindsym $mod+a focus parent
-	bindsym $mod+shift+a focus child
+bindsym $mod+s sticky toggle
 
-	bindsym $mod+s sticky toggle
+bindsym $mod+m swap container with mark master; mark master
+bindsym $mod+Shift+m mark master
 
-# Swap with master conatiner
-	bindsym $mod+m swap container with mark master; mark master
-	bindsym $mod+Shift+m mark master
+#
 # Scratchpad:
+#
 
-	# Move the currently focused window to the scratchpad
-	bindsym $mod+Shift+minus move scratchpad
+set $scratchpad_helper_var foobar
+set $update_scratchpad_helper "swaymsg -- set \$scratchpad_helper_var $RANDOM"
 
-	bindsym $mod+minus scratchpad show
-	bindsym $mod+equal scratchpad show; scratchpad show
+# Scratchpad move binds
+bindsym $mod+shift+F1 exec $update_scratchpad_helper, mark "SP1_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F2 exec $update_scratchpad_helper, mark "SP2_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F3 exec $update_scratchpad_helper, mark "SP3_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F4 exec $update_scratchpad_helper, mark "SP4_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F5 exec $update_scratchpad_helper, mark "SP5_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F6 exec $update_scratchpad_helper, mark "SP6_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F7 exec $update_scratchpad_helper, mark "SP7_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F8 exec $update_scratchpad_helper, mark "SP8_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F9 exec $update_scratchpad_helper, mark "SP9_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F10 exec $update_scratchpad_helper, mark "SP10_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F11 exec $update_scratchpad_helper, mark "SP11_$$scratchpad_helper_var", move scratchpad
+bindsym $mod+shift+F12 exec $update_scratchpad_helper, mark "SP12_$$scratchpad_helper_var", move scratchpad
 
-	# Show the next scratchpad window or hide the focused scratchpad window.
-	# If there are multiple scratchpad windows, this command cycles through them.
+# Scratchpad show binds
+bindsym $mod+F1 [con_mark=".*SP1.*"] scratchpad show
+bindsym $mod+F2 [con_mark=".*SP2.*"] scratchpad show
+bindsym $mod+F3 [con_mark=".*SP3.*"] scratchpad show
+bindsym $mod+F4 [con_mark=".*SP4.*"] scratchpad show
+bindsym $mod+F5 [con_mark=".*SP5.*"] scratchpad show
+bindsym $mod+F6 [con_mark=".*SP6.*"] scratchpad show
+bindsym $mod+F7 [con_mark=".*SP7.*"] scratchpad show
+bindsym $mod+F8 [con_mark=".*SP8.*"] scratchpad show
+bindsym $mod+F9 [con_mark=".*SP9.*"] scratchpad show
+bindsym $mod+F10 [con_mark=".*SP10.*"] scratchpad show
+bindsym $mod+F11 [con_mark=".*SP11.*"] scratchpad show
+bindsym $mod+F12 [con_mark=".*SP12.*"] scratchpad show
 
-# Resizing containers:
-	bindsym control+$mod+$left resize grow width 50px
-	bindsym control+$mod+$down resize shrink height 50px
-	bindsym control+$mod+$up resize grow height 50px
-	bindsym control+$mod+$right resize shrink width 50px
+bindsym $mod+Shift+minus move scratchpad
 
-	# Ditto, with arrow keys
-	bindsym control+$mod+Left resize grow width 50px
-	bindsym control+$mod+Down resize shrink height 50px
-	bindsym control+$mod+Up resize grow height 50px
-	bindsym control+$mod+Right resize shrink width 50px
+bindsym $mod+minus scratchpad show
+
+bindsym control+$mod+$left resize grow width 50px
+bindsym control+$mod+$down resize shrink height 50px
+bindsym control+$mod+$up resize grow height 50px
+bindsym control+$mod+$right resize shrink width 50px
+
+bindsym --locked XF86MonBrightnessDown exec doas brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp exec doas brightnessctl set 5%+
+
+bindsym Print exec grimshot copy area
+bindsym Shift+Print exec grimshot copy screen
+bindsym Control+Print exec grimshot save area ~/pictures/screenshots/$(date +%d-%m-%Y-%H-%M-%S).png
+bindsym Control+Shift+Print exec grimshot save screen ~/pictures/screenshots/$(date +%d-%m-%Y-%H-%M-%S).png
+
+xwayland enable
+
+workspace_auto_back_and_forth yes
+
+mouse_warping none
+focus_wrapping no
+focus_follows_mouse no
+
+title_align center
+
+default_border pixel 3
+default_floating_border pixel 3
 
 
-# Status Bar:
+# set primary Rosé Pine colorscheme colors
+set $base           #191724
+set $surface        #1f1d2e
+set $overlay        #26233a
+set $muted          #6e6a86
+set $subtle         #908caa
+set $text           #e0def4
+set $love           #eb6f92
+set $gold           #f6c177
+set $rose           #ebbcba
+set $pine           #31748f
+set $foam           #9ccfd8
+set $iris           #c4a7e7
+set $highlightlow   #21202e
+set $highlightmed   #403d52
+set $highlighthigh  #524f67
+
+# Teming border and Windows --------------
+# target                 title     bg    text   indicator  border
+client.focused           $gold     $gold $base  $gold      $gold
+client.focused_inactive  $base     $base $text  $subtle    $surface
+client.unfocused         $base     $base $text  $overlay   $base
+client.urgent            $text     $base $text  $love      $love
+client.placeholder       $base     $base $text  $overlay   $overlay
+client.background        $base
+
+#exec_always 'pkill waybar; waybar'
 bar {
-	position top
-
-   # When the status_command prints a new line to stdout, swaybar updates.
-   # The default just shows the current date and time.
-   status_command  ~/.local/bin/baraction.sh
-
-	colors {
-        background #2e3440
-        statusline #88c0d0
-		active_workspace 	#000000 #5f676a #ffffff
-		urgent_workspace	#000000 #ff0000 #888888
-        inactive_workspace   #3b4252 #3b4252 #8fbcbb
-	    focused_workspace  #81a1c1 #81a1c1 #eceff4
-    }
+  swaybar_command waybar
 }
 
-# Screen shot
-	bindsym Print exec sh -c 'cd ~/pictures/screenshots; grim'
-	bindsym $mod+Print exec sh -c 'cd ~/pictures/screenshots; grim -g "$(slurp)"'
-	bindsym Shift+Print exec sh -c 'grim - | wl-copy -t image/png'
-	bindsym $mod+Shift+Print exec sh -c 'grim -g "$(slurp)" - | wl-copy -t image/png'
 
-# Misc.
-	# Enable XWayland
-	xwayland enable
+font pango:noto 10
 
-	workspace_auto_back_and_forth yes
+seat * hide_cursor 2000
 
-	# Mouse wrapping
-	mouse_warping none
-	focus_wrapping no
-	focus_follows_mouse no
+# Run some programs
+exec dbus-daemon --nofork --address unix:path=$XDG_RUNTIME_DIR/bus --session
+exec dbus-update-activation-environment DISPLAY I3SOCK SWAYSOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec swaync
+exec foot --server
+exec /usr/libexec/xdg-desktop-portal
+exec /usr/libexec/xdg-desktop-portal-wlr
+exec syncthing --no-browser
 
-	# Title formating
-	title_align center
+#exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+#exec /usr/bin/gentoo-pipewire-launcher
+#exec /usr/libexec/pipewire-launcher
+#exec pipewire
+#exec mako
+#exec /usr/libexec/xdg-desktop-portal-gtk
+#exec /usr/libexec/xdg-desktop-portal-gnome
+#exec /usr/libexec/xdg-desktop-portal-kde
+#exec /usr/libexec/xdg-desktop-portal-lxqt
+#exec mpd
+#exec /usr/lib/kdeconnectd&
+#exec /usr/bin/kdeconnect-indicator&
+#exec --no-startup-id fcitx5 -d
 
-	# Border width
-	default_border pixel 2
-	default_floating_border pixel 2
+smart_borders no
+smart_gaps no
+gaps inner 15
 
-	# class                 border  backgr. text    indicator child_border
-	# client.focused          #d8dee9 #d8dee9 #000000 #d8dee9 #d8dee9
-	# client.unfocused        #1a202c #1a202c #8f95a1 #1a202c #1a202c
-	# client.focused_inactive #1a202c #5e6470 #d8dee9 #1a202c #1a202c
-	# client.urgent           #2f343a #900000 #ffffff #900000 #900000
-	# Solarized
-	#client.focused          #2aa198 #2aa198 #000000 #2aa198 #2aa198
-	#client.unfocused        #002b36 #002b36 #8f95a1 #1a202c #1a202c
-	#client.focused_inactive #2aa198 #002b36 #d8dee9 #1a202c #1a202c
-    # Nord
-    client.focused         #81a1c1 #81a1c1 #000000 #3b4252 #81a1c1
-	client.unfocused         #3b4252 #3b4252  #ffffff #81a1c1 #3b4252 
-	client.focused_inactive #3b4252 #3b4252 #ffffff #3b4252 #3b4252
-	# Set font
-	font pango:terminus 10
-
-	# Hide the cursor
-	# seat * hide_cursor 2000
-
-	# Run some programs
-	exec dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus
-    #exec /usr/bin/gentoo-pipewire-launcher
-	exec /usr/libexec/pipewire-launcher
-	exec mako
-    exec foot --server
-
-	# Transparent and floaty stuff
-	#for_window [title="Wayst"] opacity 0.9 
-	for_window [title="Steam"] opacity 1
-	for_window [title="Steam Login"] floating enable 
-	for_window [title="Properties"] floating enable
-	for_window [title="Properties"] opacity 0.95
-	for_window [title="Friends List"] floating enable
-	for_window [title="Discord Updater"] floating enable
-	for_window [title="Settings"] floating enable
-	for_window [title="Product Activation"] floating enable
-	for_window [title="Steam - News"] floating enable
-	for_window [title="- Steam"] floating enable
-	for_window [title="Install -"] floating enable
-	for_window [title="Install -"] opacity 0.95
-	for_window [title="Steam -"] opacity 0.95
-	for_window [title="qTox -"] floating enable	
-
-# Smart gaps and borders
-	smart_borders no
-	smart_gaps no
-	gaps inner 15
-
-	show_marks yes
+show_marks yes
 
 #exec glpaper -f 30 HDMI-A-2 ~/.config/shader.frag 
 
-mode "pass" {
-	bindsym mod4+Space mode "default"
-}
+#mode "pass" {
+#	bindsym mod4+Space mode "default"
+#}
+
+#exec swayidle -w \
+#  timeout 600 'hyprlock' \
+#  timeout 1200 'swaymsg "output * dpms off"' \
+#    resume 'swaymsg "output * dpms on"' \
+#  before-sleep 'hyprlock'
+
+exec swayidle -w \
+  before-sleep 'swaylock -i $HOME/.config/wallpaper-main.png'
+
+#for_window [class="steam_app_1920960"] floating enable
+#for_window [class="steam_app_1920960"] nofocus

@@ -1,0 +1,28 @@
+{
+    "name": "bar2",
+    "layer": "top",
+    "height": 50,
+    "margin-top": 0,
+    "margin-bottom": 0,
+
+    "include": ["$HOME/.config/waybar/modules.json"],
+
+    "modules-left": ["custom/cmus"],
+    "modules-center": ["sway/workspaces"],
+    "modules-right": ["tray", "pulseaudio", "network", "battery", "clock"],
+
+    "group/hardware": {
+        "orientation": "horizontal",
+        "modules": [
+            "disk"
+        ]
+    },
+  "tray": {
+    "icon-size": 20
+  },
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal"
+  },
+}

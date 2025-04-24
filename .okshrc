@@ -1,0 +1,108 @@
+#
+# ~/.mkshrc
+#
+
+#PS1=" \$PWD $(if (( USER_ID )); then print \$; else print \#; fi) "
+
+PS1="$(print ' \033[36m$(echo $PWD) \n \033[00m')$(if (( USER_ID)); then print '\033[36m>> \033[00m'; else print '\033[31m>> \033[00m'; fi)" 
+HISTFILE=$HOME/.config/.hist-ok
+HISTSIZE=10000
+
+set -o vi
+
+. ~/.config/user-dirs.dirs
+# . /home/robson/.nix-profile/etc/profile.d/nix.sh
+
+bind ^[a=beginning-of-line
+bind ^[e=end-of-line
+bind ^L=clear-screen
+
+export XDG_CONFIG_HOME=/home/robson/.config/
+export TERM=xterm
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.cargo/bin
+export EDITOR="nvim"
+export MANPAGER='nvim +Man!'
+
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
+
+export GTK_THEME=rose-pine-gtk
+
+export MOZ_DBUS_REMOTE=1
+
+xdg-mime default thunar.desktop inode/directory
+
+alias ls='exa --group-directories-first'
+alias obs="QT_QPA_PLATFORM=xcb obs"
+alias bg="bg; disown"
+alias sxiv="nsxiv"
+alias firefox="librewolf"
+
+if test -z "${XDG_RUNTIME_DIR}"; then
+  export XDG_RUNTIME_DIR=/tmp/$(id -u)-runtime-dir
+  if ! test -d "${XDG_RUNTIME_DIR}"; then
+    mkdir "${XDG_RUNTIME_DIR}"
+    chmod 0700 "${XDG_RUNTIME_DIR}"
+  fi
+fi
+
+
+if [ "$(tty)" = "/dev/tty1" ]; then
+  exec dbus-run-session -- sway
+  #exec niri --session
+fi
+
+#Desktop? What's desktop?
+rm -rf ~/Desktop
+
+umask 022
+
+#export STEAM_COMPAT_CLIENT_INSTALL_PATH=/home/robson/.steam
+#export PSPDEV=~/documents/github/pspdev
+#export PATH=$PATH:$PSPDEV/bin
+#export PATH=$PATH:$HOME/bin
+#export PATH=$PATH:/usr/local/bin/java/bin/
+#export XDG_SESSION_TYPE=wayland
+#export XDG_CURRENT_DESKTOP=sway
+#export DISPLAY=:0
+#export GTK_THEME=catppuccin-frappe-lavender-standard+default-hdpi
+#export QT_STYLE_OVERRIDE=kvantum
+#export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+#
+
+
+#GTK_IM_MODULE=fcitx
+#QT_IM_MODULE=fcitx
+#XMODIFIERS=@im=fcitx
+
+#export GTK_THEME=Everforest-Dark
+#export QT_STYLE_OVERRIDE=kvantum-dark
+
+#export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+
+#alias reload-wg="doas wg-quick down wg0; doas wg-quick up wg0"
+
+
+#osc7_cd() {
+#    cd "$1" || return $?
+#
+#    tmp="$PWD"
+#    encoded=""
+#    while [ -n "$tmp" ]; do
+#        n="${tmp#?}"
+#        c="${tmp%"$n"}"
+#        case "$c" in
+#            [-/:_.!\'\(\)~[:alnum:]]) encoded="$encoded$c" ;;
+#            *) encoded="${encoded}$(printf '%%%02X' "$c")"  ;;
+#        esac
+#        tmp="$n"
+#        unset n c
+#    done
+#
+#    printf "\033]7;file://%s%s\033\\" "$(hostname)" "$encoded"
+#    unset tmp decoded
+#}
+
+#osc7_cd "$PWD" # first-run
+#alias cd=osc7_cd
+#

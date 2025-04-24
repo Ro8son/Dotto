@@ -1,0 +1,125 @@
+* {
+  all: initial;
+  font-family: 'FiraCode Nerd Font', sans-serif;
+  font-size: 15px;
+  min-height: 20px;
+  border-radius: 0;
+}
+
+window#waybar {
+  background: rgba(35, 33, 54, 0.8);
+  color: #D3C6AA;
+}
+
+
+#system, #hardware {
+  background-color: #4c566a;
+  padding: 0 10px;
+  margin: 0px 0px 0px 0px;
+  color: #FFFFFF;
+}
+
+#tray {
+  background-color: rgba(0, 0, 0, 0.0);
+  color: #f6c177;
+  padding: 0px 7px;
+  margin: 6px 8px;
+  border-bottom: 2px solid;
+}
+
+#custom-cmus {
+  background-color: rgba(0, 0, 0, 0.0);
+  color: #f6c177;
+  padding: 0px 7px;
+  margin: 6px 8px;
+  border-bottom: 2px solid;
+}
+
+#pulseaudio {
+  background-color: rgba(0, 0, 0, 0.0);
+  color: #f6c177;
+  padding: 0px 7px;
+  margin: 6px 8px;
+  border-bottom: 2px solid;
+}
+
+#network {
+  background-color: rgba(0, 0, 0, 0.0);
+  color: #f6c177;
+  padding: 0px 7px;
+  margin: 6px 8px;
+  border-bottom: 2px solid;
+}
+
+#clock {
+  background-color: rgba(0, 0, 0, 0.0);
+  color: #f6c177;
+  padding: 0px 7px;
+  margin: 6px 8px;
+  font-weight: bold;
+  border-bottom: 2px solid;
+}
+
+/* Text properties must be applied to button labels when GTK theme is ignored */
+#workspaces button.persistent label {
+  color: #6e6a86;
+}
+
+#workspaces label {
+  font-weight: bold;
+}
+
+#workspaces {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+#workspaces button label {
+  padding: 0px 11px;
+  margin: 3px;
+}
+
+#workspaces button.focused label {
+  border-radius: 32px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: #f6c177;
+  color: #f6c177;
+  margin: 0px;
+}
+
+#workspace button.visible label {
+  color: #000FF0;
+}
+
+#workspace button.urgent label {
+  padding: 0px 11px;
+  margin: 3px;
+  color: #eb6f92;
+}
+
+#battery {
+  background-color: rgba(0, 0, 0, 0.0);
+  color: #f6c177;
+  padding: 0px 7px;
+  margin: 6px 8px;
+  border-bottom: 2px solid;
+}
+
+#battery.charging, #battery.plugged {
+  background-color: rgba(0, 0, 0, 0.0);
+  color: #f6c177;
+  padding: 0px 7px;
+  margin: 6px 8px;
+  border-bottom: 2px solid;
+}
+
+#battery.critical:not(.charging) {
+  background-color: rgba(0, 0, 0, 0.0);
+  color: #ffffff;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
